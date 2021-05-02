@@ -55,7 +55,7 @@ class ArtistViewset(viewsets.ModelViewSet):
       new_artist = Artist.objects.create(name=info['name'], age=info['age'], id=encoded_id, albums=e_album, tracks=e_track, self_url=e_self)
       new_artist.save()
       serializer = ArtistSerializer(new_artist)
-      return Response(serializer.data, status=status.HTTP_200_OK)
+      return Response(serializer.data, status=status.HTTP_201_CREATED)
 
   def destroy(self, request, *args, **kwargs):
     params = kwargs
@@ -201,7 +201,7 @@ class AlbumViewset(viewsets.ModelViewSet):
       res['artist'] = serializer.data['artist']
       res['tracks'] = serializer.data['tracks']
       res['self'] = serializer.data['self_url']
-      return Response(res, status=status.HTTP_200_OK)
+      return Response(res, status=status.HTTP_201_CREATED)
 
   def destroy(self, request, *args, **kwargs):
     params = kwargs
@@ -332,7 +332,7 @@ class TrackViewset(viewsets.ModelViewSet):
       res['album'] = serializer.data['album']
       res['self'] = serializer.data['self_url']
 
-      return Response(res, status=status.HTTP_200_OK)
+      return Response(res, status=status.HTTP_201_CREATED)
 
   def get_tracks_album(self, request, *args, **kwargs):
     params = kwargs
