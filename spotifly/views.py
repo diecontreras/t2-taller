@@ -8,11 +8,24 @@ from .serializers import ArtistSerializer, AlbumSerializer, TrackSerializer
 
 class ArtistViewset(viewsets.ModelViewSet):
   serializer_class = ArtistSerializer
+  queryset = ''
 
-  def get_queryset(self):
+  def list(self, request):
     """ Usado para obtener todos los artistas"""
-    artistas = Artist.objects.all()
-    return artistas
+    artists = Artist.objects.all()
+    a_art = []
+
+    for i in artists:
+      res = {}
+      res['id'] = i.id
+      res['name'] = i.name
+      res['age'] = i.age
+      res['albums'] = i.albums
+      res['tracks'] = i.tracks
+      res['self'] = i.self_url
+      a_art.append(res)
+    return Response(a_art, status=status.HTTP_200_OK)
+
 
   def retrieve(self, request, *args, **kwargs):
     """ Usado para obtener un artista"""
@@ -120,23 +133,24 @@ class ArtistViewset(viewsets.ModelViewSet):
 
 class AlbumViewset(viewsets.ModelViewSet):
   serializer_class = AlbumSerializer
+  queryset = ''
 
-  def get_queryset(self):
+  def list(self, request):
     albums = Album.objects.all()
     a_albums = []
 
     for i in albums:
-      aux_dict = {}
-      aux_dict['id'] = i.id
-      #aux_dict['artist_id'] = i.artist_id
-      aux_dict['name'] = i.name
-      aux_dict['genre'] = i.genre
-      aux_dict['artist'] = i.artist
-      aux_dict['tracks'] = i.tracks
-      aux_dict['self'] = i.self_url
-      a_albums.append(aux_dict)
+      res = {}
+      res['id'] = i.id
+      res['artist_id'] = i.artist_id.id
+      res['name'] = i.name
+      res['genre'] = i.genre
+      res['artist'] = i.artist
+      res['tracks'] = i.tracks
+      res['self'] = i.self_url
+      a_albums.append(res)
      
-    return a_albums
+    return Response(a_albums, status=status.HTTP_200_OK)
 
   def retrieve(self, request, *args, **kwargs):
     """ Usado para obtener un album"""
@@ -268,23 +282,24 @@ class AlbumViewset(viewsets.ModelViewSet):
 
 class TrackViewset(viewsets.ModelViewSet):
   serializer_class = TrackSerializer
+  queryset = ''
 
-  def get_queryset(self):
+  def list(self, request):
     tracks = Track.objects.all()
     a_tracks = []
 
     for i in tracks:
-      aux_dict = {}
-      aux_dict['id'] = i.id
-      #aux_dict['album_id'] = i.album_id
-      aux_dict['name'] = i.name
-      aux_dict['duration'] = i.duration
-      aux_dict['times_played'] = i.times_played
-      aux_dict['artist'] = i.artist
-      aux_dict['album'] = i.album
-      aux_dict['self'] = i.self_url
-      a_tracks.append(aux_dict)
-    return a_tracks
+      res = {}
+      res['id'] = i.id
+      res['album_id'] = i.album_id.id
+      res['name'] = i.name
+      res['duration'] = i.duration
+      res['times_played'] = i.times_played
+      res['artist'] = i.artist
+      res['album'] = i.album
+      res['self'] = i.self_url
+      a_tracks.append(res)
+    return Response(a_tracks, status=status.HTTP_200_OK)
 
   def retrieve(self, request, *args, **kwargs):
     params = kwargs
