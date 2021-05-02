@@ -30,6 +30,10 @@ class ArtistViewset(viewsets.ModelViewSet):
     #revisar que entrega bien los parametros
     info = request.data  # esto me entrega name y age
     try:
+      if 'name' not in info.keys():
+        return Response({"message": 'Input invalido'}, status=status.HTTP_400_BAD_REQUEST)
+      if 'age' not in info.keys():
+        return Response({"message": 'Input invalido'}, status=status.HTTP_400_BAD_REQUEST)
       int(info['age'])
     except:
       return Response({"message": 'Input invalido'}, status=status.HTTP_400_BAD_REQUEST)
@@ -158,7 +162,10 @@ class AlbumViewset(viewsets.ModelViewSet):
     params = kwargs
 
     # revisar que input sea valido
-
+    if 'name' not in info.keys():
+      return Response({"message": 'Input invalido'}, status=status.HTTP_400_BAD_REQUEST)
+    if 'genre' not in info.keys():
+      return Response({"message": 'Input invalido'}, status=status.HTTP_400_BAD_REQUEST)
 
     # revisar que exista artista
     try:

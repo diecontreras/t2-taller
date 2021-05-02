@@ -66,18 +66,18 @@ tracks_play = TrackViewset.as_view({
 
 
 urlpatterns = [
-  path('artists/', artists_list, name='artist'),
-  path('artists/<str:id>/', artists_detail, name='artist_detail'),
+  path('artists', artists_list, name='artist'),
+  path('artists/<str:id>', artists_detail, name='artist_detail'),
   path('artists/<str:id>/tracks', tracks_artist, name='show_tracks'),
   path('artists/<str:id>/albums', albums_artist, name='create_album'), 
   path('artists/<str:id>/albums/play', artist_play, name='play_artist'), 
 
-  path('albums/', albums_list, name='album'), 
-  path('albums/<str:id>/', albums_detail, name='albums_detail'),
+  path('albums', albums_list, name='album'), 
+  path('albums/<str:id>', albums_detail, name='albums_detail'),
   path('albums/<str:id>/tracks', tracks_album, name='create_track'),
   path('albums/<str:id>/tracks/play', album_play , name='play_album'),
 
-  path('tracks/', tracks_list, name='tracks'),
+  path('tracks', tracks_list, name='tracks'),
   path('tracks/<str:id>', tracks_detail, name='tracks_detail'),
   path('tracks/<str:id>/play', tracks_play, name='play_track'),
 
