@@ -42,15 +42,15 @@ class ArtistViewset(viewsets.ModelViewSet):
         return Response({"message": "Artista ya existe"}, status=status.HTTP_409_CONFLICT)
     except:
       encoded_id = b64encode(info['name'].encode()).decode('utf-8') [:22]
-      e_album = "http://127.0.0.1:8000/artists/"
+      e_album = "https://t2spotifly.herokuapp.com/artists/"
       e_album += encoded_id
       e_album += "/albums"
 
-      e_track = "http://127.0.0.1:8000/artists/"
+      e_track = "https://t2spotifly.herokuapp.com/artists/"
       e_track += encoded_id
       e_track += "/tracks"
 
-      e_self = "http://127.0.0.1:8000/artists/"
+      e_self = "https://t2spotifly.herokuapp.com/artists/"
       e_self += encoded_id
 
       new_artist = Artist.objects.create(name=info['name'], age=info['age'], id=encoded_id, albums=e_album, tracks=e_track, self_url=e_self)
@@ -175,9 +175,9 @@ class AlbumViewset(viewsets.ModelViewSet):
       aux = info['name'] + ":" + params['id']
       e_id = b64encode(aux.encode()).decode('utf-8')[:22]
 
-      a_artist = "http://127.0.0.1:8000/artists/" + params['id']
-      a_track = "http://127.0.0.1:8000/albums/" + e_id + "/tracks"
-      a_self = "http://127.0.0.1:8000/albums/" + e_id
+      a_artist = "https://t2spotifly.herokuapp.com/artists/" + params['id']
+      a_track = "https://t2spotifly.herokuapp.com/albums/" + e_id + "/tracks"
+      a_self = "https://t2spotifly.herokuapp.com/albums/" + e_id
 
       new_album = Album.objects.create(id=e_id, artist_id=Artist.objects.get(id=params['id']), name=info['name'], genre=info['genre'], artist=a_artist , tracks=a_track , self_url=a_self )
       new_album.save()
@@ -304,9 +304,9 @@ class TrackViewset(viewsets.ModelViewSet):
 
       aa = Album.objects.get(id=params['id']).artist_id.id
 
-      a_artist = "http://127.0.0.1:8000/artists/" + aa
-      a_album = "http://127.0.0.1:8000/albums/" + params['id']
-      a_self = "http://127.0.0.1:8000/tracks/" + e_id
+      a_artist = "https://t2spotifly.herokuapp.com/artists/" + aa
+      a_album = "https://t2spotifly.herokuapp.com/albums/" + params['id']
+      a_self = "https://t2spotifly.herokuapp.com/tracks/" + e_id
 
       new_track = Track.objects.create(id=e_id, album_id=Album.objects.get(id=params['id']), name=info['name'], duration=info['duration'], times_played=0, artist=a_artist, album=a_album, self_url=a_self)
       new_track.save()
