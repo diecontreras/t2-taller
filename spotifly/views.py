@@ -27,7 +27,6 @@ class ArtistViewset(viewsets.ModelViewSet):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
   def create(self, request, *args, **kwargs):
-
     #revisar que entrega bien los parametros
     info = request.data  # esto me entrega name y age
     try:
