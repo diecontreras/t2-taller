@@ -69,7 +69,7 @@ class ArtistViewset(viewsets.ModelViewSet):
       return Response({"message": "Artista no existe"}, status=status.HTTP_404_NOT_FOUND)
     
     accion.delete()
-    return Response({"message":"artista borrado"})
+    return Response({"message":"artista borrado"}, , status=status.HTTP_204_NO_CONTENT)
 
   def update(self, request, *args, **kwargs):
     artist_id = kwargs['id']
@@ -218,7 +218,7 @@ class AlbumViewset(viewsets.ModelViewSet):
       return Response({"message": "Album no existe"}, status=status.HTTP_404_NOT_FOUND)
     
     accion.delete()
-    return Response({"message":"Album borrado"})
+    return Response({"message":"Album borrado"}, status=status.HTTP_204_NO_CONTENT)
 
   def update(self, request, *args, **kwargs):
     album_id = kwargs['id']
@@ -410,7 +410,7 @@ class TrackViewset(viewsets.ModelViewSet):
       return Response({"message": "Track no existe"}, status=status.HTTP_404_NOT_FOUND)
     
     accion.delete()
-    return Response({"message":"Track borrado"})
+    return Response({"message":"Track borrado"}, status=status.HTTP_204_NO_CONTENT)
 
   def update(self, request, *args, **kwargs):
     track_id = kwargs['id']
