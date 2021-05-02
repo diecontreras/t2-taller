@@ -169,7 +169,18 @@ class AlbumViewset(viewsets.ModelViewSet):
     # revisar que no exista album
     try:
       album = Album.objects.get(name=info['name'])
-      return Response({"message": "Album ya existe"}, status=status.HTTP_409_CONFLICT)
+      serializer = AlbumSerializer(album)
+
+      res = {}
+      res['id'] = serializer.data['id']
+      res['artist_id'] = serializer.data['artist_id']['id']
+      res['name'] = serializer.data['name']
+      res['genre'] = serializer.data['genre']
+      res['artist'] = serializer.data['artist']
+      res['tracks'] = serializer.data['tracks']
+      res['self'] = serializer.data['self_url']
+
+      return Response(res, status=status.HTTP_409_CONFLICT)
     except:
       aux = info['name'] + ":" + params['id']
       e_id = b64encode(aux.encode()).decode('utf-8')[:22]
@@ -284,7 +295,7 @@ class TrackViewset(viewsets.ModelViewSet):
     try:
       track = Track.objects.get(name=info['name'])
 
-      serializer = TrackSerializer(new_track)
+      serializer = TrackSerializer(track)
 
       res = {}
       res['id'] = serializer.data['id']
@@ -296,7 +307,7 @@ class TrackViewset(viewsets.ModelViewSet):
       res['album'] = serializer.data['album']
       res['self'] = serializer.data['self_url']
 
-      return Response({"message": "Track ya existe", "body": res}, status=status.HTTP_409_CONFLICT)
+      return Response(res, status=status.HTTP_409_CONFLICT)
     except:
       aux = info['name'] + ":" + params['id']
       e_id = b64encode(aux.encode()).decode('utf-8')[:22]
