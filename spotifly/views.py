@@ -35,12 +35,12 @@ class ArtistViewset(viewsets.ModelViewSet):
       return Response({"message": 'Input invalido'}, status=status.HTTP_400_BAD_REQUEST)
 
     # revisar que no exista
+    encoded_id = b64encode(info['name'].encode()).decode('utf-8') [:22]
     try:
-      new_id = b64encode(info['name'].encode()).decode('utf-8') [:22]
-      if Artist.objects.get(artist_id=new_id):
-        return Response({"message": "Artista ya existe"}, status=status.HTTP_409_CONFLICT)
+      exia = Artist.objects.get(id=encoded_id)
+      serializer = ArtistSerializer(exia)
+      return Response(serializer.data, status=status.HTTP_409_CONFLICT)
     except:
-      encoded_id = b64encode(info['name'].encode()).decode('utf-8') [:22]
       e_album = "https://t2spotifly.herokuapp.com/artists/"
       e_album += encoded_id
       e_album += "/albums"
