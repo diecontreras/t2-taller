@@ -24,7 +24,16 @@ class ArtistViewset(viewsets.ModelViewSet):
       return Response({"message": "Artista no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
     serializer = ArtistSerializer(artista)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+
+    res = {}
+    res['id'] = serializer.data['id']
+    res['name'] = serializer.data['name']
+    res['age'] = serializer.data['age']
+    res['albums'] = serializer.data['albums']
+    res['tracks'] = serializer.data['tracks']
+    res['self'] = serializer.data['self_url']
+
+    return Response(res, status=status.HTTP_200_OK)
 
   def create(self, request, *args, **kwargs):
     #revisar que entrega bien los parametros
@@ -43,7 +52,15 @@ class ArtistViewset(viewsets.ModelViewSet):
     try:
       exia = Artist.objects.get(id=encoded_id)
       serializer = ArtistSerializer(exia)
-      return Response(serializer.data, status=status.HTTP_409_CONFLICT)
+
+      res = {}
+      res['id'] = serializer.data['id']
+      res['name'] = serializer.data['name']
+      res['age'] = serializer.data['age']
+      res['albums'] = serializer.data['albums']
+      res['tracks'] = serializer.data['tracks']
+      res['self'] = serializer.data['self_url']
+      return Response(res, status=status.HTTP_409_CONFLICT)
     except:
       e_album = "https://t2spotifly.herokuapp.com/artists/"
       e_album += encoded_id
@@ -59,7 +76,16 @@ class ArtistViewset(viewsets.ModelViewSet):
       new_artist = Artist.objects.create(name=info['name'], age=info['age'], id=encoded_id, albums=e_album, tracks=e_track, self_url=e_self)
       new_artist.save()
       serializer = ArtistSerializer(new_artist)
-      return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+      res = {}
+      res['id'] = serializer.data['id']
+      res['name'] = serializer.data['name']
+      res['age'] = serializer.data['age']
+      res['albums'] = serializer.data['albums']
+      res['tracks'] = serializer.data['tracks']
+      res['self'] = serializer.data['self_url']
+
+      return Response(res, status=status.HTTP_201_CREATED)
 
   def destroy(self, request, *args, **kwargs):
     params = kwargs
