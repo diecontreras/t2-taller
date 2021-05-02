@@ -69,7 +69,7 @@ class ArtistViewset(viewsets.ModelViewSet):
       return Response({"message": "Artista no existe"}, status=status.HTTP_404_NOT_FOUND)
     
     accion.delete()
-    return Response({"message":"artista borrado"}, , status=status.HTTP_204_NO_CONTENT)
+    return Response({"message":"artista borrado"}, status=status.HTTP_204_NO_CONTENT)
 
   def update(self, request, *args, **kwargs):
     artist_id = kwargs['id']
