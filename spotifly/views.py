@@ -334,6 +334,7 @@ class TrackViewset(viewsets.ModelViewSet):
       if 'duration' not in info.keys():
         return Response({"message": 'Input invalido'}, status=status.HTTP_400_BAD_REQUEST)
       float(info['duration'])
+      
     except:
       return Response({"message": 'Input invalido'}, status=status.HTTP_400_BAD_REQUEST)
 
